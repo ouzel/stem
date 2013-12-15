@@ -175,13 +175,9 @@ Qlx9HNCqCY877ztFRC624ja2ql6A2hBcuoYMbkHjcQ4=
         unrecognized_lines = desc.get_unrecognized_lines()
 
         if unrecognized_lines:
-          # TODO: This isn't actually a problem, and rather than failing we
-          # should alert the user about these entries at the end of the tests
-          # (along with new events, getinfo options, and such). For now though
-          # there doesn't seem to be anything in practice to trigger this so
-          # failing to get our attention if it does.
-
-          self.fail("Unrecognized descriptor content: %s" % unrecognized_lines)
+          self.fail("Unrecognized descriptor content: %s\nTor appears to have new "
+                    "capabilities. If you are running the latest version of stem, please "
+                    "file a ticket on trac.torproject.org" % unrecognized_lines)
 
   def test_non_ascii_descriptor(self):
     """
