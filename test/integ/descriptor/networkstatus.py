@@ -43,17 +43,17 @@ class TestNetworkStatus(unittest.TestCase):
       for router in stem.descriptor.parse_file(descriptor_file, "network-status-consensus-3 1.0"):
         count += 1
 
+        # check if there's any unknown flags
+        # TODO: this should be a 'new capability' check later rather than
+        # failing the tests
         for flag in router.flags:
           if not flag in stem.Flag:
-            self.fail("Unrecognized flag type: %s, found on microdescriptor relay %s (%s)\nTor appears to have new capabilities. "
-                      "If you are running the latest version of stem, please file a ticket on trac.torproject.org"
-                      % (flag, router.fingerprint, router.nickname) )
+            raise ValueError("Unrecognized flag type: %s, found on relay %s (%s)" % (flag, router.fingerprint, router.nickname))
 
         unrecognized_lines = router.get_unrecognized_lines()
 
         if unrecognized_lines:
-          self.fail("Unrecognized descriptor content: %s\nTor appears to have new capabilities. If you are running the latest version "
-                    "of stem, please file a ticket on trac.torproject.org" % unrecognized_lines)
+          self.fail("Unrecognized descriptor content: %s" % unrecognized_lines)
 
     # Sanity test that there's at least a hundred relays. If that's not the
     # case then this probably isn't a real, complete tor consensus.
@@ -84,17 +84,17 @@ class TestNetworkStatus(unittest.TestCase):
       for router in stem.descriptor.parse_file(descriptor_file, "network-status-microdesc-consensus-3 1.0"):
         count += 1
 
+        # check if there's any unknown flags
+        # TODO: this should be a 'new capability' check later rather than
+        # failing the tests
         for flag in router.flags:
           if not flag in stem.Flag:
-            self.fail("Unrecognized flag type: %s, found on microdescriptor relay %s (%s)\nTor appears to have new capabilities. "
-                      "If you are running the latest version of stem, please file a ticket on trac.torproject.org" 
-                      % (flag, router.fingerprint, router.nickname) )
+            raise ValueError("Unrecognized flag type: %s, found on microdescriptor relay %s (%s)" % (flag, router.fingerprint, router.nickname))
 
         unrecognized_lines = router.get_unrecognized_lines()
 
         if unrecognized_lines:
-          self.fail("Unrecognized descriptor content: %s\nTor appears to have new capabilities. If you are running the latest version "
-                    "of stem, please file a ticket on trac.torproject.org" % unrecognized_lines)
+          self.fail("Unrecognized descriptor content: %s" % unrecognized_lines)
 
     self.assertTrue(count > 100)
 

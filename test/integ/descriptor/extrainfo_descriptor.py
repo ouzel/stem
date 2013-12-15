@@ -153,6 +153,10 @@ k0d2aofcVbHr4fPQOSST0LXDrhFl5Fqo5um296zpJGvRUeO6S44U/EfJAGShtqWw
         elif desc.dir_v2_tunneled_dl_unknown:
           self.fail("Unrecognized stats on dirreq-v2-tunneled-dl lines: %s" % desc.dir_v2_tunneled_dl_unknown)
         elif unrecognized_lines:
-          self.fail("Unrecognized descriptor content: %s\nTor appears to have new "
-                    "capabilities. If you are running the latest version of stem, please "
-                    "file a ticket on trac.torproject.org" % unrecognized_lines)
+          # TODO: This isn't actually a problem, and rather than failing we
+          # should alert the user about these entries at the end of the tests
+          # (along with new events, getinfo options, and such). For now though
+          # there doesn't seem to be anything in practice to trigger this so
+          # failing to get our attention if it does.
+
+          self.fail("Unrecognized descriptor content: %s" % unrecognized_lines)

@@ -58,9 +58,7 @@ class TestMicrodescriptor(unittest.TestCase):
         unrecognized_lines = desc.get_unrecognized_lines()
 
         if unrecognized_lines:
-          self.fail("Unrecognized descriptor content: %s\nTor appears to have new "
-                    "capabilities. If you are running the latest version of stem, please "
-                    "file a ticket on trac.torproject.org" % unrecognized_lines)
+          self.fail("Unrecognized microdescriptor content: %s" % unrecognized_lines)
 
   def test_local_microdescriptors(self):
     """
